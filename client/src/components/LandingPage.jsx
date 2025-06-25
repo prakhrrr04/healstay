@@ -1,24 +1,28 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './LandingPage.css';
-import { useNavigate } from 'react-router-dom';
-
 
 const LandingPage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
   return (
     <div className="landing-container">
+      {/* ✅ Login Button */}
+      <div className="top-bar">
+        <Link to="/login" className="login-link">Login</Link>
+      </div>
+
       <header className="hero">
         <h1>Welcome to <span className="brand">HealStay</span></h1>
         <p>Find verified accommodations near hospitals tailored for patients and caregivers.</p>
         <div className="hero-buttons">
-  <button className="primary-btn" onClick={() => navigate('/register-provider')}>
-    Register Property
-  </button>
-  <button className="secondary-btn" onClick={() => navigate('/request-accommodation')}>
-    Find a Stay
-  </button>
-</div>
-
+          <button className="primary-btn" onClick={() => navigate('/register-provider')}>
+            Register Property
+          </button>
+          <button className="secondary-btn" onClick={() => navigate('/request-accommodation')}>
+            Find a Stay
+          </button>
+        </div>
       </header>
 
       <section className="features">
