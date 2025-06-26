@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { auth, provider } from '../firebase';
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
-
+import './AuthForms.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -13,7 +13,7 @@ const LoginPage = () => {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Logged in successfully");
     } catch (err) {
-      console.error(err.message);
+      alert(err.message);
     }
   };
 
@@ -22,20 +22,36 @@ const LoginPage = () => {
       await signInWithPopup(auth, provider);
       alert("Google login successful");
     } catch (err) {
-      console.error(err.message);
+      alert(err.message);
     }
   };
 
   return (
-    <div className="form-wrapper">
-      <h2>Login</h2>
-      <form onSubmit={handleEmailLogin} className="consumer-form">
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required />
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
-        <button type="submit">Login</button>
-      </form>
-      <hr />
-      <button onClick={handleGoogleLogin}>Sign in with Google</button>
+    <div className="auth-wrapper">
+      <div className="auth-card">
+        <h2>Login</h2>
+        <form onSubmit={handleEmailLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <button type="submit">Login</button>
+        </form>
+
+        <div className="auth-separator">or</div>
+
+        <button onClick={handleGoogleLogin}>Sign in with Google</button>
+      </div>
     </div>
   );
 };

@@ -2,6 +2,7 @@
 .consumer-form-wrapper {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   padding: 80px 20px;
   background-color: #0f172a;
   min-height: 100vh;
@@ -13,26 +14,28 @@
   width: 100%;
   max-width: 1000px;
   background-color: #1e293b;
-  padding: 40px 50px;
-  border-radius: 10px;
+  padding: 48px 50px;
+  border-radius: 12px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
   color: white;
   display: flex;
   flex-direction: column;
+  gap: 30px;
 }
 
 /* Title styling */
 .form-title {
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   color: #3b82f6;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  font-weight: 700;
 }
 
 /* Subtitle/description text */
 .form-subtext {
   font-size: 1rem;
   color: #cbd5e1;
-  margin-bottom: 30px;
+  line-height: 1.5;
 }
 
 /* Form layout */
@@ -61,7 +64,12 @@ select {
   border: 1px solid #475569;
   background-color: #334155;
   color: white;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
 }
 
 input:focus,
@@ -74,7 +82,7 @@ select:focus {
 
 /* Submit button */
 button[type="submit"] {
-  padding: 14px;
+  padding: 14px 20px;
   background-color: #6366f1;
   color: white;
   border: none;
@@ -82,10 +90,22 @@ button[type="submit"] {
   font-weight: bold;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px;
 }
 
 button[type="submit"]:hover {
   background-color: #4f46e5;
+  transform: translateY(-1px);
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .form-card {
+    padding: 30px 24px;
+  }
+
+  .form-title {
+    font-size: 2rem;
+  }
 }

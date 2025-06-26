@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import './AuthForms.css';
 
 const SignupPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('consumer');
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const urlParams = new URLSearchParams(location.search);
+  const defaultRole = urlParams.get('role') || 'consumer';
+  const [role, setRole] = useState(defaultRole);
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -16,48 +21,47 @@ const SignupPage = () => {
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCred.user;
 
-      // Save user role to Firestore
       await setDoc(doc(db, 'users', user.uid), {
         email,
         role,
       });
 
-      // Redirect based on role
       if (role === 'provider') {
         navigate('/register-provider');
       } else {
         navigate('/request-accommodation');
       }
-
     } catch (err) {
       alert(err.message);
     }
   };
 
   return (
-    <div className="form-wrapper">
-      <h2>Create Account</h2>
-      <form onSubmit={handleSignup}>
-        <label>
-          Email:
-          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
-
-        <label>
-          Password:
-          <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-        </label>
-
-        <label>
-          Role:
+    <div className="auth-wrapper">
+      <div className="auth-card">
+        <h2>Sign Up</h2>
+        <form onSubmit={handleSignup}>
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
           <select value={role} onChange={(e) => setRole(e.target.value)}>
             <option value="consumer">Consumer</option>
             <option value="provider">Provider</option>
           </select>
-        </label>
-
-        <button type="submit">Sign Up</button>
-      </form>
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
     </div>
   );
 };
