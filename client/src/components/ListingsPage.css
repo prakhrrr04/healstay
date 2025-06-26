@@ -1,0 +1,45 @@
+.listings-page {
+  padding: 60px 20px;
+  background-color: #0f172a;
+  min-height: 100vh;
+  color: white;
+}
+
+.listings-page h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #3b82f6;
+  margin-bottom: 30px;
+}
+
+.no-results {
+  text-align: center;
+  color: #94a3b8;
+  margin-top: 40px;
+  font-size: 1.1rem;
+}
+
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.listing-card {
+  background-color: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.listing-card:hover {
+  transform: translateY(-4px);
+}
+
+.listing-card h3 {
+  margin-bottom: 10px;
+  color: #e0e7ff;
+}
