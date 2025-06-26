@@ -1,59 +1,74 @@
-/* BookNow.css */
-
-.booknow-container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 30px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', sans-serif;
+.booknow-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+  background-color: #0f172a;
+  min-height: 100vh;
+  color: white;
 }
 
-.booknow-container h2 {
+.booknow-card {
+  background-color: #1e293b;
+  padding: 40px 50px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+}
+
+.booknow-card h2 {
+  font-size: 1.8rem;
   margin-bottom: 20px;
-  color: #333;
+  color: #3b82f6;
   text-align: center;
 }
 
-.booknow-form label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 5px;
-  color: #444;
+.property-details {
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #334155;
+  border-radius: 8px;
+  font-size: 0.95rem;
 }
 
-.booknow-form input,
-.booknow-form select,
-.booknow-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 18px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 15px;
-  transition: border-color 0.3s;
+.property-details p {
+  margin: 6px 0;
 }
 
-.booknow-form input:focus,
-.booknow-form select:focus,
-.booknow-form textarea:focus {
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.booking-form input {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background-color: #334155;
+  color: white;
+  border: 1px solid #475569;
+  font-size: 1rem;
+}
+
+.booking-form input:focus {
   outline: none;
-  border-color: #0077cc;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4);
 }
 
-.booknow-form button {
-  width: 100%;
+.submit-booking {
   padding: 12px;
-  background-color: #0077cc;
-  color: #fff;
+  background-color: #6366f1;
+  color: white;
   border: none;
-  border-radius: 6px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
-.booknow-form button:hover {
-  background-color: #005fa3;
+.submit-booking:hover {
+  background-color: #4f46e5;
 }

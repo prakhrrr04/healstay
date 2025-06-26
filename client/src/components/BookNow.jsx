@@ -74,59 +74,61 @@ const BookNow = () => {
 
   return (
     <div className="booknow-page">
-      <h2>Book a Stay</h2>
+      <div className="booknow-card">
+        <h2>Book a Stay</h2>
 
-      {property ? (
-        <div className="property-details">
-          <h3>{property.name}</h3>
-          <p><strong>Address:</strong> {property.address}</p>
-          <p><strong>Near:</strong> {property.hospitalNearby}</p>
-        </div>
-      ) : (
-        <p>Loading property...</p>
-      )}
+        {property ? (
+          <div className="property-details">
+            <h3>{property.name}</h3>
+            <p><strong>Address:</strong> {property.address}</p>
+            <p><strong>Near:</strong> {property.hospitalNearby}</p>
+          </div>
+        ) : (
+          <p>Loading property...</p>
+        )}
 
-      <form className="booking-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="fullName"
-          placeholder="Your Full Name"
-          value={formData.fullName}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="disease"
-          placeholder="Disease Type"
-          value={formData.disease}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="specialNeeds"
-          placeholder="Special Needs (if any)"
-          value={formData.specialNeeds}
-          onChange={handleChange}
-        />
-        <input
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="duration"
-          placeholder="Duration of Stay (days)"
-          value={formData.duration}
-          onChange={handleChange}
-          required
-        />
+        <form className="booking-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="fullName"
+            placeholder="Your Full Name"
+            value={formData.fullName}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="disease"
+            placeholder="Disease Type"
+            value={formData.disease}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="specialNeeds"
+            placeholder="Special Needs (if any)"
+            value={formData.specialNeeds}
+            onChange={handleChange}
+          />
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="number"
+            name="duration"
+            placeholder="Duration of Stay (days)"
+            value={formData.duration}
+            onChange={handleChange}
+            required
+          />
 
-        <button type="submit" className="submit-booking">Submit Booking</button>
-      </form>
+          <button type="submit" className="submit-booking">Submit Booking</button>
+        </form>
+      </div>
     </div>
   );
 };
