@@ -11,6 +11,9 @@ const LandingPage = () => {
       <div className="top-bar">
         <Link to="/login" className="login-link">Login</Link>
       </div>
+      <button className="secondary-btn" onClick={() => navigate('/signup')}>
+        Sign Up
+      </button>
 
       <header className="hero">
         <h1>Welcome to <span className="brand">HealStay</span></h1>
