@@ -5,7 +5,7 @@ import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import './LandingPage.css';
 
-const LandingPage = () => { 
+const LandingPage = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
@@ -15,7 +15,6 @@ const LandingPage = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
-
       if (user) {
         const docRef = doc(db, 'users', user.uid);
         const docSnap = await getDoc(docRef);
@@ -28,7 +27,6 @@ const LandingPage = () => {
         setUserRole(null);
       }
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -51,25 +49,23 @@ const LandingPage = () => {
   };
 
   const handleRegisterClick = async () => {
-  if (!auth.currentUser) {
-    setShowProviderPrompt(true);  // Show modal instead of redirecting immediately
-    return;
-  }
-
-  try {
-    const userDoc = await getDoc(doc(db, 'users', auth.currentUser.uid));
-    if (userDoc.exists() && userDoc.data().role === 'provider') {
-      navigate('/register-provider');
-    } else {
-      alert('Only provider accounts can register properties.');
+    if (!auth.currentUser) {
+      setShowProviderPrompt(true); // Show modal instead of redirecting immediately
+      return;
     }
-  } catch (err) {
-    console.error(err);
-    alert('Error verifying user role.');
-  }
-};
 
-
+    try {
+      const userDoc = await getDoc(doc(db, 'users', auth.currentUser.uid));
+      if (userDoc.exists() && userDoc.data().role === 'provider') {
+        navigate('/register-provider');
+      } else {
+        alert('Only provider accounts can register properties.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error verifying user role.');
+    }
+  };
 
   return (
     <div className="page">
@@ -89,19 +85,35 @@ const LandingPage = () => {
                   if (e.key === 'Enter') handleSearch();
                 }}
               />
-              <button onClick={handleSearch} className="search-icon-btn"> <i className="fas fa-search"></i> </button>
+              <button
+                onClick={handleSearch}
+                className="search-icon-btn"
+                aria-label="Search"
+              >
+                <i className="fas fa-search"></i>
+              </button>
             </div>
           </div>
 
           <div className="nav-actions">
             {currentUser ? (
-              <button className="nav-link" onClick={handleLogout}>Logout</button>
-            ) : (
-              <>
-                <Link to="/login" className="nav-link">Login</Link>
-                <Link to="/signup" className="signup-btn">Sign Up</Link>
-              </>
-            )}
+    <>
+      {userRole === 'provider' && (
+        <button
+          className="nav-link"
+          onClick={() => navigate('/provider-dashboard')}
+        >
+          Dashboard
+        </button>
+      )}
+      <button className="nav-link" onClick={handleLogout}>Logout</button>
+    </>
+  ) : (
+    <>
+      <Link to="/login" className="nav-link">Login</Link>
+      <Link to="/signup" className="signup-btn">Sign Up</Link>
+    </>
+  )}
           </div>
         </div>
       </div>
@@ -116,9 +128,8 @@ const LandingPage = () => {
               Register Property
             </button>
             <button onClick={() => navigate('/listings')} className="secondary-btn">
-                Find a Stay
+              Find a Stay
             </button>
-
           </div>
         </div>
       </div>
@@ -151,20 +162,20 @@ const LandingPage = () => {
         </div>
       </footer>
 
+      {/* MODAL */}
       {showProviderPrompt && (
-      <div className="modal-overlay">
-      <div className="modal">
-      <h3>Register as Provider</h3>
-      <p>You need to login or sign up as a provider to register a property.</p>
-      <div className="modal-buttons">
-        <button onClick={() => navigate('/login')}>Login</button>
-        <button onClick={() => navigate('/signup?role=provider')}>Sign Up</button>
-        <button onClick={() => setShowProviderPrompt(false)}>Cancel</button>
-      </div>
-    </div>
-  </div>
-)}
-
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Register as Provider</h3>
+            <p>You need to login or sign up as a provider to register a property.</p>
+            <div className="modal-buttons">
+              <button onClick={() => navigate('/login')}>Login</button>
+              <button onClick={() => navigate('/signup?role=provider')}>Sign Up</button>
+              <button onClick={() => setShowProviderPrompt(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

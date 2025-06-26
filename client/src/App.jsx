@@ -7,7 +7,9 @@ import ConsumerForm from './components/ConsumerForm';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignUpPage'; 
 import ListingsPage from './components/ListingsPage';
+import ProviderDashboard from './components/ProviderDashboard'; // adjust the path as needed
 import AddDummyListings from './components/AddDummyListings';
+import BookNow from './components/BookNow';
 
 import './App.css';
 
@@ -22,6 +24,8 @@ function App() {
         {/* {process.env.NODE_ENV === 'development' && (
           <Route path="/add-dummy" element={<AddDummyListings />} />
         )} */}
+        <Route path="/book-now/:propertyId" element={<BookNow />} />
+        <Route path="/provider-dashboard" element={<ProviderDashboard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} /> {/* ✅ This must exist */}
       </Routes>

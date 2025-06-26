@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useLocation } from 'react-router-dom';
 import './ListingsPage.css';
 
 const ListingsPage = () => {
+  const navigate = useNavigate();
   const [listings, setListings] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const location = useLocation();
@@ -46,6 +48,12 @@ const ListingsPage = () => {
               <p><strong>Near:</strong> {item.hospitalNearby}</p>
               <p><strong>Facilities:</strong> {item.facilities?.join(', ')}</p>
               <p><strong>Description:</strong> {item.description}</p>
+              <button
+  onClick={() => navigate(`/book-now/${item.id}`)}
+  className="book-now-btn"
+>
+  Book Now
+</button>
             </div>
           ))}
         </div>

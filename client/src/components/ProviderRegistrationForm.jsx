@@ -48,7 +48,8 @@ const ProviderRegistrationForm = () => {
         hospitalNearby,
         facilities,
         description,
-        createdAt: new Date()
+        createdAt: new Date(),
+        providerId: auth.currentUser.uid
       });
 
       alert("Property submitted successfully!");
