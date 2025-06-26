@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
 
 import LandingPage from './components/LandingPage';
 import ProviderRegistrationForm from './components/ProviderRegistrationForm';
 import ConsumerForm from './components/ConsumerForm';
 import LoginPage from './components/LoginPage';
-import SignupPage from './components/SignUpPage'; 
+import SignupPage from './components/SignUpPage'; // ✅ Matches filename exactly
+import './App.css';
 
 function App() {
   return (
