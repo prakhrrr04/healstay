@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
 
 import LandingPage from './components/LandingPage';
 import ProviderRegistrationForm from './components/ProviderRegistrationForm';
 import ConsumerForm from './components/ConsumerForm';
-import LoginPage from './components/LoginPage'; // ✅ Only import the correct login page
-import SignupPage from './components/SignUpPage';
+import LoginPage from './components/LoginPage';
+import SignupPage from './components/SignUpPage'; 
 
 function App() {
   return (
@@ -14,8 +15,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/register-provider" element={<ProviderRegistrationForm />} />
         <Route path="/request-accommodation" element={<ConsumerForm />} />
-        <Route path="/login" element={<LoginPage />} /> {/* ✅ This is enough */}
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} /> {/* ✅ This must exist */}
       </Routes>
     </Router>
   );
