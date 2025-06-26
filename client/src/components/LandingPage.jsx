@@ -7,13 +7,11 @@ const LandingPage = () => {
 
   return (
     <div className="landing-container">
-      {/* ✅ Login Button */}
+      {/* Top Navigation */}
       <div className="top-bar">
-        <Link to="/login" className="login-link">Login</Link>
+        <Link to="/login" className="nav-btn">Login</Link>
+        <Link to="/signup" className="nav-btn">Sign Up</Link>
       </div>
-      <button className="secondary-btn" onClick={() => navigate('/signup')}>
-        Sign Up
-      </button>
 
       <header className="hero">
         <h1>Welcome to <span className="brand">HealStay</span></h1>

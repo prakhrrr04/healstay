@@ -1,8 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
+  // your config
   apiKey: "AIzaSyC2Hc0kqVjfDOqr77zRm8E6_ZgH_u8VPkE",
   authDomain: "healstay-51f3f.firebaseapp.com",
   projectId: "healstay-51f3f",
@@ -16,3 +17,7 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const provider = new GoogleAuthProvider(); // ✅ FIXED
+
+
+
