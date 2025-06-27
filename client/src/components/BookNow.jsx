@@ -16,6 +16,7 @@ const BookNow = () => {
     duration: '',
   });
   const [user, setUser] = useState(null);
+  console.log('Booking property:', property);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(setUser);
@@ -50,20 +51,28 @@ const BookNow = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     if (!user) {
       alert('Please login to book a stay.');
       navigate('/login');
       return;
     }
 
+    if (!property?.providerId) {
+    alert('Property data is missing provider ID.');
+    return;
+    }
+
     try {
       await addDoc(collection(db, 'bookings'), {
-        ...formData,
-        userId: user.uid,
-        propertyId: property.id,
-        bookedAt: new Date(),
-      });
+      ...formData,
+      userId: user.uid,
+      propertyId: property.id,
+      providerId: property.providerId,  // <-- this line is essential
+      bookedAt: new Date(),
+      status: 'pending',
+    });
+
       alert('Booking request submitted!');
       navigate('/listings');
     } catch (err) {

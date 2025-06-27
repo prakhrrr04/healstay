@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './ProviderDashboard.css';
 
 const ProviderDashboard = () => {
   const [properties, setProperties] = useState([]);
-  const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -19,8 +18,9 @@ const ProviderDashboard = () => {
         return;
       }
 
-      const userDoc = await getDocs(query(collection(db, 'users'), where('email', '==', user.email)));
-      const role = userDoc.docs[0]?.data()?.role;
+      const userRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+      const role = userSnap.exists() ? userSnap.data().role : null;
 
       if (role !== 'provider') {
         alert('Only providers can access the dashboard.');
@@ -28,16 +28,10 @@ const ProviderDashboard = () => {
         return;
       }
 
-      // Fetch properties listed by this provider
       const propertyQuery = query(collection(db, 'properties'), where('providerId', '==', user.uid));
       const propertySnapshot = await getDocs(propertyQuery);
       const listedProperties = propertySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setProperties(listedProperties);
-
-      // Fetch accommodation requests (for later)
-      const requestSnapshot = await getDocs(collection(db, 'requests'));
-      const allRequests = requestSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setRequests(allRequests);
 
       setLoading(false);
     });
@@ -49,6 +43,9 @@ const ProviderDashboard = () => {
 
   return (
     <div className="dashboard-wrapper">
+      <div className="nav-bar">
+        <button onClick={() => navigate('/provider-bookings')}>Manage Bookings</button>
+      </div>
       <h2>My Property Listings</h2>
       {properties.length === 0 ? (
         <p>You haven't listed any properties yet.</p>

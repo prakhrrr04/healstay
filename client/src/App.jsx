@@ -10,6 +10,7 @@ import ProviderDashboard from './components/ProviderDashboard';
 import BookNow from './components/BookNow';
 import MyBookings from './components/MyBookings'; 
 import AddHospital from './components/AddHospital';
+import ProviderBookings from './components/ProviderBookings';
 
 import './App.css';
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/my-bookings" element={<MyBookings />} />
         <Route path="/book-now/:propertyId" element={<BookNow />} />
         <Route path="/provider-dashboard" element={<ProviderDashboard />} />
+        <Route path="/provider-bookings" element={<ProviderBookings />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} /> 
       </Routes>

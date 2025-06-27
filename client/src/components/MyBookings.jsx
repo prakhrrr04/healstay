@@ -1,66 +1,58 @@
+// src/pages/MyBookings.jsx
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
-import { collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import './MyBookings.css';
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBookings = async () => {
-      const user = auth.currentUser;
-      if (!user) {
-        alert('Please login to view your bookings.');
-        navigate('/login');
-        return;
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
+
+      const bookingsQuery = query(collection(db, 'bookings'), where('userId', '==', user.uid));
+      const bookingSnapshot = await getDocs(bookingsQuery);
+      const bookingData = [];
+
+      for (let docSnap of bookingSnapshot.docs) {
+        const booking = docSnap.data();
+        const propertyRef = doc(db, 'properties', booking.propertyId);
+        const propertySnap = await getDoc(propertyRef);
+
+        bookingData.push({
+          id: docSnap.id,
+          ...booking,
+          property: propertySnap.exists() ? propertySnap.data() : null
+        });
       }
 
-      try {
-        const q = query(collection(db, 'bookings'), where('userId', '==', user.uid));
-        const snapshot = await getDocs(q);
-        const data = [];
+      setBookings(bookingData);
+      setLoading(false);
+    });
 
-        for (let docSnap of snapshot.docs) {
-          const booking = docSnap.data();
-          const propertyRef = doc(db, 'properties', booking.propertyId);
-          const propertySnap = await getDoc(propertyRef);
-          const property = propertySnap.exists() ? propertySnap.data() : {};
-          data.push({ id: docSnap.id, ...booking, property });
-        }
+    return () => unsubscribe();
+  }, []);
 
-        setBookings(data);
-      } catch (err) {
-        console.error('Error fetching bookings:', err);
-        alert('Failed to load bookings.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBookings();
-  }, [navigate]);
-
-  if (loading) return <div style={{ padding: '30px' }}>Loading your bookings...</div>;
+  if (loading) return <div style={{ padding: '30px' }}>Loading bookings...</div>;
 
   return (
     <div className="my-bookings-page">
       <h2>My Bookings</h2>
-
       {bookings.length === 0 ? (
-        <p>You have not made any bookings yet.</p>
+        <p>You haven’t booked any properties yet.</p>
       ) : (
         <div className="bookings-grid">
           {bookings.map((booking) => (
-            <div className="booking-card" key={booking.id}>
-              <h3>{booking.property?.name || 'Unknown Property'}</h3>
-              <p><strong>Address:</strong> {booking.property?.address}</p>
-              <p><strong>Near:</strong> {booking.property?.hospitalNearby}</p>
-              <p><strong>Booking Date:</strong> {booking.date}</p>
+            <div key={booking.id} className="booking-card">
+              <h3>{booking.property?.name || 'Property not found'}</h3>
+              <p><strong>Location:</strong> {booking.property?.address}</p>
+              <p><strong>Hospital Nearby:</strong> {booking.property?.hospitalNearby}</p>
+              <p><strong>Start Date:</strong> {booking.date}</p>
               <p><strong>Duration:</strong> {booking.duration} days</p>
-              <p><strong>Special Needs:</strong> {booking.specialNeeds || 'None'}</p>
+              <p><strong>Status:</strong> Pending (for now)</p>
             </div>
           ))}
         </div>

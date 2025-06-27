@@ -55,16 +55,17 @@ const ProviderRegistrationForm = () => {
 
     try {
       await addDoc(collection(db, 'properties'), {
-        uid: currentUser.uid,
-        name,
-        contact,
-        address,
-        hospitalNearby,
-        facilities,
-        description,
-        createdAt: new Date(),
-        providerId: currentUser.uid,
-      });
+      uid: currentUser.uid,
+      name,
+      contact,
+      address,
+      hospitalNearby,
+      facilities,
+      description,
+      createdAt: new Date(),
+      providerId: currentUser.uid  // ✅ This must exist
+    });
+
 
       alert("Property submitted successfully!");
       navigate('/');
