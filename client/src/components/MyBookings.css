@@ -1,0 +1,19 @@
+.my-bookings-page {
+  padding: 40px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.bookings-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.booking-card {
+  background-color: #1e293b;
+  padding: 20px 30px;
+  border-radius: 10px;
+  color: white;
+  border: 1px solid #334155;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}

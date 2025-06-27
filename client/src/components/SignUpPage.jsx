@@ -27,9 +27,9 @@ const SignupPage = () => {
       });
 
       if (role === 'provider') {
-        navigate('/register-provider');
+        navigate('/provider-dashboard');
       } else {
-        navigate('/request-accommodation');
+        navigate('/listings');
       }
     } catch (err) {
       alert(err.message);

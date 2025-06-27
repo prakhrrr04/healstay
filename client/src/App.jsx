@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import LandingPage from './components/LandingPage';
 import ProviderRegistrationForm from './components/ProviderRegistrationForm';
 import ConsumerForm from './components/ConsumerForm';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignUpPage'; 
 import ListingsPage from './components/ListingsPage';
-import ProviderDashboard from './components/ProviderDashboard'; // adjust the path as needed
-import AddDummyListings from './components/AddDummyListings';
+import ProviderDashboard from './components/ProviderDashboard'; 
 import BookNow from './components/BookNow';
+import MyBookings from './components/MyBookings'; 
+import AddHospital from './components/AddHospital';
 
 import './App.css';
 
@@ -20,14 +20,13 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/register-provider" element={<ProviderRegistrationForm />} />
         <Route path="/request-accommodation" element={<ConsumerForm />} />
+        <Route path="/add-hospital" element={<AddHospital />} />
         <Route path="/listings" element={<ListingsPage />} />
-        {/* {process.env.NODE_ENV === 'development' && (
-          <Route path="/add-dummy" element={<AddDummyListings />} />
-        )} */}
+        <Route path="/my-bookings" element={<MyBookings />} />
         <Route path="/book-now/:propertyId" element={<BookNow />} />
         <Route path="/provider-dashboard" element={<ProviderDashboard />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} /> {/* ✅ This must exist */}
+        <Route path="/signup" element={<SignupPage />} /> 
       </Routes>
     </Router>
   );

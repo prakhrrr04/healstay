@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './ProviderRegistrationForm.css';
 
 const ProviderRegistrationForm = () => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
-
+  const [hospitalList, setHospitalList] = useState([]);
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
   const [address, setAddress] = useState('');
@@ -18,13 +18,27 @@ const ProviderRegistrationForm = () => {
 
   const allFacilities = ['Wheelchair Access', 'Oxygen Supply', '24/7 Caretaker', 'Kitchen Access'];
 
+  //login status
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) setCurrentUser(user);
       else navigate('/login');
     });
-
     return () => unsubscribe();
+  }, []);
+
+  //fetch the hospitals
+  useEffect(() => {
+    const fetchHospitals = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, 'hospitals'));
+        const hospitals = snapshot.docs.map(doc => doc.data().name);
+        setHospitalList(hospitals);
+      } catch (err) {
+        console.error('Error fetching hospitals:', err);
+      }
+    };
+    fetchHospitals();
   }, []);
 
   const handleFacilityToggle = (facility) => {
@@ -49,7 +63,7 @@ const ProviderRegistrationForm = () => {
         facilities,
         description,
         createdAt: new Date(),
-        providerId: auth.currentUser.uid
+        providerId: currentUser.uid,
       });
 
       alert("Property submitted successfully!");
@@ -78,8 +92,18 @@ const ProviderRegistrationForm = () => {
             <input type="text" required value={address} onChange={(e) => setAddress(e.target.value)} />
           </label>
 
+          {/* Changed hospital input to dropdown */}
           <label>Nearby Hospital:
-            <input type="text" required value={hospitalNearby} onChange={(e) => setHospitalNearby(e.target.value)} />
+            <select
+              required
+              value={hospitalNearby}
+              onChange={(e) => setHospitalNearby(e.target.value)}
+            >
+              <option value="">Select a hospital</option>
+              {hospitalList.map((hospital, index) => (
+                <option key={index} value={hospital}>{hospital}</option>
+              ))}
+            </select>
           </label>
 
           <label>Description:

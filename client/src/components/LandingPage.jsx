@@ -106,6 +106,14 @@ const LandingPage = () => {
           Dashboard
         </button>
       )}
+      {userRole === 'consumer' && (
+        <button
+          className="nav-link"
+          onClick={() => navigate('/my-bookings')}
+        >
+          My Bookings
+        </button>
+      )}
       <button className="nav-link" onClick={handleLogout}>Logout</button>
     </>
   ) : (
